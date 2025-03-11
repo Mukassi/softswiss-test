@@ -1,0 +1,38 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100dvh;
+  background: $bg-gradient;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Lato', sans-serif;
+  line-height: 100%;
+  color: $color-white;
+  scroll-behavior: smooth;
+}
+
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.container {
+  padding-left: 80px;
+  padding-right: 80px;
+  @media (max-width: $tablet) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  @media (max-width: $mobile) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
