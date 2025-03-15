@@ -1,5 +1,4 @@
 import { Link } from 'react-router';
-import '../styles/header.scss';
 import { LogoIcon } from './icons/LogoIcon';
 import { JSX, useEffect, useRef, useState } from 'react';
 import { BurgerIcon } from './icons/BurgerIcon.tsx';
@@ -36,7 +35,7 @@ function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
       <Link to="/">
         <LogoIcon />
       </Link>
-      <div className="header__navigation">
+      <nav className="header__navigation">
         {items.map((item) => {
           if (item.component) {
             return (
@@ -52,7 +51,7 @@ function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
             );
           }
         })}
-      </div>
+      </nav>
       <button ref={burgerRef} className="burger-icon" onClick={handleBurgerClick}>
         {isMenuOpen ? <CrossIcon /> : <BurgerIcon />}
       </button>
@@ -60,7 +59,7 @@ function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
       <aside className={`sidebar ${isMenuOpen ? 'sidebar__open' : ''}`}>
         <div className="sidebar__content">
           {items.map((item) => (
-            <Link to={item.url} key={item.id} className="sidebar__link">
+            <Link to={item.url} key={item.id} className="sidebar__link" onClick={handleBurgerClick}>
               {item.title}
             </Link>
           ))}
