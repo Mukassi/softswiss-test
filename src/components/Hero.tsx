@@ -1,9 +1,7 @@
-import React from 'react';
-import '../styles/banner.scss';
 import Button from './Button';
-import { renderText } from '../utils/text';
+import { renderText } from '@/utils/text';
 
-interface HeroProps {
+export interface HeroProps {
   title: (string | { text: string; class: string })[];
   description: (string | { text: string; class: string })[];
   button: {

@@ -10,7 +10,6 @@ $color-yellow-dark: #92a51d;
 $color-white: #fff;
 $color-black: #000;
 $color-grey: #a8a8a8;
-$primary-color: $color-black;
 $bg-gradient: linear-gradient(180deg, #0d1e48 0%, #304571 100%);
 $link-hover-gradient: linear-gradient(135deg, #ebff00 15%, #ff70d9 80%);
 
@@ -51,6 +50,10 @@ $link-hover-gradient: linear-gradient(135deg, #ebff00 15%, #ff70d9 80%);
   }
 }
 
+@mixin text-extrabold {
+  font-weight: 800;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -58,7 +61,7 @@ $link-hover-gradient: linear-gradient(135deg, #ebff00 15%, #ff70d9 80%);
 }
 
 body {
-  height: 100dvh;
+  height: 100%;
   background: $bg-gradient;
   background-repeat: no-repeat;
   background-size: cover;
@@ -72,6 +75,10 @@ button {
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 .container {
@@ -90,23 +97,23 @@ button {
 }
 
 .text {
-  font-weight: 700;
-
-  &-pink {
+  &--pink {
     color: $color-pink;
   }
 
-  &-yellow {
+  &--yellow {
     color: $color-yellow;
   }
+}
 
-  &-extrabold {
-    font-weight: 800;
+.lg-inline-block {
+  display: none;
+  @include lg {
+    display: inline-block;
   }
 }
 
 .btn {
-  @apply text;
   border-radius: 100px;
   cursor: pointer;
   text-decoration: none;
@@ -116,7 +123,7 @@ button {
   height: 33px;
   font-size: 16px;
   @include fontSize(22px, 22px, 16px);
-  &__primary {
+  &--primary {
     border: none;
     background: $color-yellow;
     color: $color-black;
@@ -129,7 +136,7 @@ button {
     }
   }
 
-  &__secondary {
+  &--secondary {
     background: transparent;
     color: $color-yellow;
     border: 2px solid $color-yellow;
@@ -283,8 +290,8 @@ button {
   }
 
   &__title {
-    @apply text-extrabold;
     @include fontSize(72px, 48px, 36px);
+    @include text-extrabold;
     @include md-lg {
       max-width: 411px;
     }
@@ -294,7 +301,169 @@ button {
   }
 
   &__description {
-    @apply text-extrabold;
     @include fontSize(32px, 22px, 16px);
+    @include text-extrabold;
+  }
+}
+
+.offers {
+  display: grid;
+  gap: 30px;
+  margin: 50px 0;
+
+  @include md {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include md-lg {
+    margin: 55px 0;
+  }
+
+  @include lg {
+    gap: 40px;
+    margin: 60px 0;
+  }
+
+  &__title {
+    grid-column: 1 / -1;
+    @include fontSize(32px, 24px, 18px);
+    @include text-extrabold;
+  }
+}
+
+.card {
+  aspect-ratio: 320 / 350;
+  padding: 26px 32px;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 22px;
+
+  background-size: auto, cover;
+  background-position: center, center;
+
+  border-radius: 10px;
+
+  @include md-lg {
+    aspect-ratio: 338 / 350;
+  }
+
+  @include lg {
+    height: 350px;
+    aspect-ratio: initial;
+  }
+
+  &__title {
+    @include fontSize(46px, 40px, 40px);
+    @include text-extrabold;
+  }
+
+  &__description {
+    @include fontSize(24px, 16px, 16px);
+    @include text-extrabold;
+    @include md {
+      width: max-content;
+    }
+  }
+
+  &--large {
+    @include lg {
+      grid-column: 1 / -1;
+    }
+    .card__title {
+      @include fontSize(74px, 40px, 40px);
+      @include text-extrabold;
+    }
+    .card__description {
+      @include fontSize(26px, 16px, 16px);
+      @include text-extrabold;
+    }
+  }
+}
+
+.info {
+  margin-bottom: 50px;
+  @include md-lg {
+    margin-bottom: 53px;
+  }
+
+  @include lg {
+    margin-bottom: 60px;
+  }
+
+  &__title {
+    @include fontSize(32px, 24px, 18px);
+    @include text-extrabold;
+  }
+
+  &__text {
+    padding-top: 20px;
+    opacity: 0.6;
+    max-height: max-content;
+    transition: max-height 0.25s ease;
+    @include fontSize(20px, 16px, 14px);
+    @include md-lg {
+      padding-top: 13px;
+    }
+
+    @include lg {
+      padding-top: 17px;
+    }
+
+    &__info {
+      max-height: 0;
+      padding-top: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: max-height 0.3s ease, opacity 0.15s ease, transform 0.15s ease;
+    }
+  }
+  &__input {
+    display: none;
+  }
+  &__input:checked ~ &__text__info {
+    max-height: 500px;
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+
+  &__input-label {
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+    color: $color-yellow;
+    margin-top: 10px;
+
+    &:hover {
+      color: $color-yellow-dark;
+    }
+    &::after {
+      content: 'Read more';
+      @include fontSize(20px, 16px, 14px);
+      @include text-extrabold;
+    }
+  }
+  &__input:checked ~ &__input-label::after {
+    content: 'Show less';
+  }
+}
+
+.footer {
+  height: 127px;
+  background-color: $color-black;
+
+  &__image {
+    display: block;
+    margin: auto;
+    height: 80px;
+  }
+
+  &__text {
+    color: $color-yellow;
+    text-align: center;
+    font-size: 18px;
+    @include text-extrabold;
   }
 }

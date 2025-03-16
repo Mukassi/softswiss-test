@@ -1,14 +1,14 @@
 import { Link } from 'react-router';
-import { LogoIcon } from './icons/LogoIcon';
-import { JSX, useEffect, useRef, useState } from 'react';
-import { BurgerIcon } from './icons/BurgerIcon.tsx';
-import { CrossIcon } from './icons/CrossIcon.tsx';
+import { useEffect, useRef, useState } from 'react';
+import { BurgerIcon } from '@/components/icons/BurgerIcon';
+import { CrossIcon } from '@/components/icons/CrossIcon';
+import { LogoIcon } from '@/components/icons/LogoIcon';
 
-interface HeaderItems {
+export interface HeaderItems {
   id: string;
   title: string;
   url: string;
-  component?: () => JSX.Element;
+  component?: React.FC;
 }
 function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,17 +17,26 @@ function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
   const handleResize = () => {
     if (burgerRef.current && !burgerRef.current.offsetParent) {
       setIsMenuOpen(false);
+      document.body.classList.remove('no-scroll');
     }
   };
 
   const handleBurgerClick = () => {
+    if (!isMenuOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
     setIsMenuOpen(!isMenuOpen);
   };
 
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.body.classList.remove('no-scroll');
+    };
   }, []);
 
   return (
@@ -59,7 +68,13 @@ function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
       <aside className={`sidebar ${isMenuOpen ? 'sidebar__open' : ''}`}>
         <div className="sidebar__content">
           {items.map((item) => (
-            <Link to={item.url} key={item.id} className="sidebar__link" onClick={handleBurgerClick}>
+            <Link
+              to={item.url}
+              key={item.id}
+              className="sidebar__link"
+              onClick={handleBurgerClick}
+              tabIndex={isMenuOpen ? 0 : -1}
+            >
               {item.title}
             </Link>
           ))}
