@@ -13,6 +13,25 @@ $color-grey: #a8a8a8;
 $bg-gradient: linear-gradient(180deg, #0d1e48 0%, #304571 100%);
 $link-hover-gradient: linear-gradient(135deg, #ebff00 15%, #ff70d9 80%);
 
+@mixin font($size) {
+  font-size: $size;
+  font-weight: $fontWeight;
+  font-family: 'Lato', sans-serif;
+  line-height: 100%;
+}
+
+@mixin fontSize($sizeDesktop, $sizeTablet, $sizeMobile) {
+  @include font($sizeMobile);
+
+  @include lg {
+    font-size: $sizeDesktop;
+  }
+
+  @include md-lg {
+    font-size: $sizeTablet;
+  }
+}
+
 @mixin md {
   @media (min-width: $md) {
     @content;
@@ -31,29 +50,6 @@ $link-hover-gradient: linear-gradient(135deg, #ebff00 15%, #ff70d9 80%);
   }
 }
 
-@mixin font($size) {
-  font-size: $size;
-  font-weight: 700;
-  font-family: 'Lato', sans-serif;
-  line-height: 100%;
-}
-
-@mixin fontSize($sizeDesktop, $sizeTablet, $sizeMobile) {
-  @include font($sizeMobile);
-
-  @include lg {
-    font-size: $sizeDesktop;
-  }
-
-  @include md-lg {
-    font-size: $sizeTablet;
-  }
-}
-
-@mixin text-extrabold {
-  font-weight: 800;
-}
-
 * {
   padding: 0;
   margin: 0;
@@ -68,6 +64,7 @@ body {
   font-family: 'Lato', sans-serif;
   line-height: 100%;
   color: $color-white;
+  font-weight: 700;
   scroll-behavior: smooth;
 }
 
@@ -290,8 +287,8 @@ button {
   }
 
   &__title {
+    font-weight: 800;
     @include fontSize(72px, 48px, 36px);
-    @include text-extrabold;
     @include md-lg {
       max-width: 411px;
     }
@@ -301,8 +298,8 @@ button {
   }
 
   &__description {
+    font-weight: 800;
     @include fontSize(32px, 22px, 16px);
-    @include text-extrabold;
   }
 }
 
@@ -326,8 +323,8 @@ button {
 
   &__title {
     grid-column: 1 / -1;
+    font-weight: 800;
     @include fontSize(32px, 24px, 18px);
-    @include text-extrabold;
   }
 }
 
@@ -355,13 +352,13 @@ button {
   }
 
   &__title {
+    font-weight: 800;
     @include fontSize(46px, 40px, 40px);
-    @include text-extrabold;
   }
 
   &__description {
+    font-weight: 800;
     @include fontSize(24px, 16px, 16px);
-    @include text-extrabold;
     @include md {
       width: max-content;
     }
@@ -372,12 +369,12 @@ button {
       grid-column: 1 / -1;
     }
     .card__title {
+      font-weight: 800;
       @include fontSize(74px, 40px, 40px);
-      @include text-extrabold;
     }
     .card__description {
+      font-weight: 800;
       @include fontSize(26px, 16px, 16px);
-      @include text-extrabold;
     }
   }
 }
@@ -393,8 +390,8 @@ button {
   }
 
   &__title {
+    font-weight: 800;
     @include fontSize(32px, 24px, 18px);
-    @include text-extrabold;
   }
 
   &__text {
@@ -432,7 +429,6 @@ button {
   &__input-label {
     display: inline-block;
     cursor: pointer;
-    font-weight: bold;
     color: $color-yellow;
     margin-top: 10px;
 
@@ -441,8 +437,8 @@ button {
     }
     &::after {
       content: 'Read more';
+      font-weight: 800;
       @include fontSize(20px, 16px, 14px);
-      @include text-extrabold;
     }
   }
   &__input:checked ~ &__input-label::after {
@@ -463,7 +459,7 @@ button {
   &__text {
     color: $color-yellow;
     text-align: center;
+    font-weight: 800;
     font-size: 18px;
-    @include text-extrabold;
   }
 }
