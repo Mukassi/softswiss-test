@@ -15,7 +15,6 @@ $link-hover-gradient: linear-gradient(135deg, #ebff00 15%, #ff70d9 80%);
 
 @mixin font($size) {
   font-size: $size;
-  font-weight: $fontWeight;
   font-family: 'Lato', sans-serif;
   line-height: 100%;
 }
