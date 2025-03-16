@@ -11,23 +11,23 @@ export interface HeaderItems {
   component?: React.FC;
 }
 function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSidebarOpened, setIsSidebarOpened] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
 
   const handleResize = () => {
     if (burgerRef.current && !burgerRef.current.offsetParent) {
-      setIsMenuOpen(false);
+      setIsSidebarOpened(false);
       document.body.classList.remove('no-scroll');
     }
   };
 
-  const handleBurgerClick = () => {
-    if (!isMenuOpen) {
+  const toggleSidebar = (value: boolean) => {
+    if (value) {
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');
     }
-    setIsMenuOpen(!isMenuOpen);
+    setIsSidebarOpened(value);
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
 
   return (
     <header className="container header">
-      <Link to="/">
+      <Link to="/" onClick={() => toggleSidebar(false)}>
         <LogoIcon />
       </Link>
       <nav className="header__navigation">
@@ -61,19 +61,19 @@ function Header({ items }: Readonly<{ items: HeaderItems[] }>) {
           }
         })}
       </nav>
-      <button ref={burgerRef} className="burger-icon" onClick={handleBurgerClick}>
-        {isMenuOpen ? <CrossIcon /> : <BurgerIcon />}
+      <button ref={burgerRef} className="burger-icon" onClick={() => toggleSidebar(!isSidebarOpened)}>
+        {isSidebarOpened ? <CrossIcon /> : <BurgerIcon />}
       </button>
 
-      <aside className={`sidebar ${isMenuOpen ? 'sidebar__open' : ''}`}>
+      <aside className={`sidebar ${isSidebarOpened ? 'sidebar__open' : ''}`}>
         <div className="sidebar__content">
           {items.map((item) => (
             <Link
               to={item.url}
               key={item.id}
               className="sidebar__link"
-              onClick={handleBurgerClick}
-              tabIndex={isMenuOpen ? 0 : -1}
+              onClick={() => toggleSidebar(!isSidebarOpened)}
+              tabIndex={isSidebarOpened ? 0 : -1}
             >
               {item.title}
             </Link>
